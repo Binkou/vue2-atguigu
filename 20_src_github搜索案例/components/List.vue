@@ -1,9 +1,14 @@
 <template>
   <div class="row">
     <!--展示用户列表-->
-    <div v-show="info.users.length" class="card" v-for="user in info.users" :key="user.login">
+    <div
+      v-show="info.users.length"
+      class="card"
+      v-for="user in info.users"
+      :key="user.login"
+    >
       <a :href="user.html_url" target="_blank">
-        <img :src="user.avatar_url" style='width: 100px'/>
+        <img :src="user.avatar_url" style="width: 100px" />
       </a>
       <p class="card-text">{{ user.login }}</p>
     </div>
@@ -12,35 +17,38 @@
     <!--加载中--->
     <h1 v-show="info.isLoading">Loading...</h1>
     <!---错误信息-->
-    <h1 v-show="info.errMsg">Something has been wrong, errorMessage: {{ info.errMsg }}</h1>
+    <h1 v-show="info.errMsg">
+      Something has been wrong, errorMessage: {{ info.errMsg }}
+    </h1>
   </div>
 </template>
 
 <script>
 export default {
   name: "List",
-  data(){
+  data() {
     return {
-      info : {
+      info: {
         isFirst: true, //是否为第一次使用
-        users:[],
+        users: [],
         isLoading: false, //是否在加载中
-        errMsg: '',
-      }
-    }
+        errMsg: "",
+      },
+    };
   },
   mounted() {
-    this.$bus.$on('updateListData', (dataObj) => {
+    this.$bus.$on("updateListData", (dataObj) => {
       // console.log(`我是list，接到了数据data:`, users);
       // this.isFirst = isFirst;
       // this.isLoading = isLoading;
       // this.errMsg = errMsg;
       // this.users = users;
+
+      //ES6语法，相当于java中的copyProperties方法，这样做的结果就是仅复制属性值，this.info的属性就不会丢失
       this.info = { ...this.info, ...dataObj };
     });
-  }
-
-}
+  },
+};
 </script>
 
 <style scoped>
@@ -54,14 +62,14 @@ export default {
 .card {
   float: left;
   width: 33.333%;
-  padding: .75rem;
+  padding: 0.75rem;
   margin-bottom: 2rem;
   border: 1px solid #efefef;
   text-align: center;
 }
 
 .card > img {
-  margin-bottom: .75rem;
+  margin-bottom: 0.75rem;
   border-radius: 100px;
 }
 
